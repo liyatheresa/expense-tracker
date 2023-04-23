@@ -1,0 +1,60 @@
+.individual-expenses-page {
+  min-height: 100%;
+  min-width: 100%;
+}
+.calculate-expense{
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.total-expense{
+  color:red
+}
+.comments-and-pie-chart{
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  gap: 10rem;
+}
+.arrow-back{
+  cursor: pointer;
+  position: absolute;
+  top: 1.4rem;
+  left: 1rem;
+  z-index: 2;
+}
+.grey-background{
+  background-color: #eee;
+}
+.dark-grey-background{
+  background-color: #ccc;
+}
+.border-bottom{
+  border-block: 1px solid #888;
+}
+.comments-title{
+  font-weight: 500;
+  font-size: 16px;
+}
+.comment{
+  padding-bottom: 1rem;
+}
+.comments{
+  padding-left: 2rem;
+}
+.comments ul li{
+  font-size: 16px;
+}
+.individual-expense-table input{
+  height: 2rem;
+  margin: 0;
+}
+.individual-expense-table td, .individual-expense-table th{
+  padding-left: 2rem;
+}
+.amount{
+  color:red
+}
+.summary{
+  margin-top: 1rem;
+}

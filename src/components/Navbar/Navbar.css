@@ -1,0 +1,31 @@
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid rgb(212, 212, 212);
+  z-index: 2;
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 0.5rem;
+}
+.nav-title {
+  color: #3f51b5;
+}
+.logout-button {
+  position: absolute;
+  right: 1rem;
+}
+.profile-icon{
+  color:#3f51b5;
+}
+.user-profile{
+  position: absolute;
+  left: 3.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #000;
+  gap: 0.5rem;
+}

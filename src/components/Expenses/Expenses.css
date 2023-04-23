@@ -1,0 +1,23 @@
+.submit-expenses-form {
+  position: absolute;
+  right: 1rem;
+  margin: 1rem;
+}
+.total-expenses-table {
+  margin: 1rem;
+  max-width: 95vw;
+}
+.add-new-row{
+  display: flex;
+  justify-content: right;
+}
+.expense-sum{
+ color: #3f51b5;
+ font-weight: 700;
+}
+.edit-button{
+  cursor: pointer;
+}
+.expense-amount{
+  margin-left:2rem;
+}
