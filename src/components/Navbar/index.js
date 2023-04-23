@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AUTH_STATUS_KEY } from "../../Constants";
-import { AUTHENTICATION_PATHS } from "../../Constants";
+import { APPLICATION_PATHS } from "../../Constants";
 import {
   setIsExpenseTableVisible,
   setIsPeopleCountFormVisible,
@@ -29,7 +29,7 @@ const Navbar = () => {
     dispatch(setIsPeopleCountFormVisible(false));
     dispatch(setIsPeopleNameFormVisible(false));
     dispatch(logoutAction());
-    navigate(AUTHENTICATION_PATHS.LOGIN);
+    navigate(APPLICATION_PATHS.LOGIN);
   };
   return (
     <nav className="nav-bar">

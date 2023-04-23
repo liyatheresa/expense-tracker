@@ -7,6 +7,7 @@ const initState = {
       contactNumber: 9447355144,
       mailId: "liya.theresa@gmail.com",
       password: "abc",
+      id: crypto.randomUUID(),
     },
   ],
   isAuthenticated: false,

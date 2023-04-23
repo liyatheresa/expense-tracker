@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AUTHENTICATION_PATHS, AUTH_STATUS_KEY } from "../../Constants";
+import { APPLICATION_PATHS, AUTH_STATUS_KEY } from "../../Constants";
 import "./LoginPage.css";
 import { loginAction, setLoggedIn } from "../Actions/authenticationAction";
 
@@ -22,7 +22,7 @@ const LoginPage = () => {
       return;
     }
     if (authStatusKey === "true") {
-      navigate(AUTHENTICATION_PATHS.DASHBOARD);
+      navigate(APPLICATION_PATHS.DASHBOARD);
     }
   }, []);
 
@@ -44,13 +44,13 @@ const LoginPage = () => {
       alert("Incorrect credentials");
       return;
     }
-    localStorage.setItem(AUTH_STATUS_KEY, true);
+    sessionStorage.setItem(AUTH_STATUS_KEY, true);
     dispatch(loginAction(userToLogin.mailId));
-    navigate(AUTHENTICATION_PATHS.DASHBOARD);
+    navigate(APPLICATION_PATHS.DASHBOARD);
   };
 
   const registerNewUser = () => {
-    navigate(AUTHENTICATION_PATHS.REGISTRATION);
+    navigate(APPLICATION_PATHS.REGISTRATION);
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { AUTHENTICATION_PATHS } from "../../Constants";
+import { APPLICATION_PATHS } from "../../Constants";
 import { addNewUser } from "../Actions/authenticationAction";
 import MandatoryField from "../MandatoryField";
 import SimpleModal from "../SimpleModal";
@@ -29,7 +29,7 @@ const UserRegistration = () => {
     let isUserExists = users.some((user) => user.mailId === mailId);
     if (isUserExists) {
       alert("User already exists");
-      navigate(AUTHENTICATION_PATHS.LOGIN);
+      navigate(APPLICATION_PATHS.LOGIN);
       return;
     }
     let name = `${firstName} ${lastName}`;
@@ -41,7 +41,7 @@ const UserRegistration = () => {
       <form className="col s12" onSubmit={newUserRegistration}>
         <h4 className="center-align">User Registration</h4>
         <span className="back-to-login">
-          <Link to={AUTHENTICATION_PATHS.LOGIN}>Back to Login</Link>
+          <Link to={APPLICATION_PATHS.LOGIN}>Back to Login</Link>
         </span>
         <div className="row">
           <div className="input-field col s6">
@@ -132,7 +132,7 @@ const UserRegistration = () => {
         <SimpleModal
           timeoutDelay={3000}
           onTimeout={() => {
-            navigate(AUTHENTICATION_PATHS.LOGIN);
+            navigate(APPLICATION_PATHS.LOGIN);
           }}
           body="User Registration Successful"
           closeModal={() => setIsUserRegistered(false)}

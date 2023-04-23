@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AUTHENTICATION_PATHS, EXPENSE_TYPES } from "../../Constants";
+import { APPLICATION_PATHS, EXPENSE_TYPES } from "../../Constants";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -98,7 +98,7 @@ const Expenses = () => {
     dispatch(addTotalExpense(totalAmount));
     dispatch(setIsExpenseTableVisible(false));
     dispatch(navigateToIndividualExpensesPage());
-    navigate(AUTHENTICATION_PATHS.INDIVIDUAL_EXPENSES);
+    navigate(APPLICATION_PATHS.INDIVIDUAL_EXPENSES);
   };
 
   const options = Object.keys(EXPENSE_TYPES).map((expenseType) => ({

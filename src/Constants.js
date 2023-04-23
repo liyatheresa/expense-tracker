@@ -1,4 +1,4 @@
-export const AUTHENTICATION_PATHS = {
+export const APPLICATION_PATHS = {
   HOME: "/",
   LOGIN: "/login",
   REGISTRATION: "/registration",
