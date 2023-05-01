@@ -84,4 +84,17 @@ app.post("/members/read", async (req, resp) => {
   }
 });
 
+app.post("/expenses/read", async (req, resp) => {
+  const groupExpenses = getGroupExpensesModel();
+  const { body } = req;
+  const userDocument = await groupExpenses
+    .findOne({ userId: body.userId })
+    .exec();
+  if (!userDocument) {
+    resp.send("Not found");
+  } else {
+    resp.send(userDocument.expenses);
+  }
+});
+
 app.listen(PORT);

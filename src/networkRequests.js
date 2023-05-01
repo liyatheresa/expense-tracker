@@ -2,6 +2,7 @@ import {
   ADD_EXPENSES,
   ADD_MEMBERS,
   CREATE_NEW_USER,
+  READ_EXPENSES,
   READ_MEMBERS,
   USER_LOGIN,
 } from "./endpoints";
@@ -41,6 +42,14 @@ export const addExpenses = async (expenses) => {
 
 export const readMembers = async (userId) => {
   const result = await callApi("POST", READ_MEMBERS, userId);
+  if (result.status === 200) {
+    return { success: true, result: result.data };
+  }
+  return { success: false };
+};
+
+export const readExpenses = async (userId) => {
+  const result = await callApi("POST", READ_EXPENSES, userId);
   if (result.status === 200) {
     return { success: true, result: result.data };
   }

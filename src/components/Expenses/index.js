@@ -10,9 +10,10 @@ import {
   setIsExpenseTableVisible,
   updateAmount,
   updateExpense,
+  updateExpenses,
 } from "../Actions/addNewExpenseAction";
 import "./Expenses.css";
-import { addExpenses } from "../../networkRequests";
+import { addExpenses, readExpenses } from "../../networkRequests";
 
 const Expenses = () => {
   const [currentId, setCurrentId] = useState("");
@@ -27,6 +28,19 @@ const Expenses = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getExistingExpensesDetails = async () => {
+    const { success, result } = await readExpenses({ userId: loggedInUserId });
+    if (success && result !== "Not found") {
+      dispatch(updateExpenses(result));
+    } else {
+      dispatch(updateExpenses([]));
+    }
+  };
+
+  useEffect(() => {
+    getExistingExpensesDetails();
+  }, []);
 
   useEffect(() => {
     let sumAmount = 0;

@@ -19,6 +19,7 @@ const expensesReducer = (state = initState, action) => {
 
     case EXPENSES_ACTION_TYPES.UPDATE_EXPENSE_AMOUNT:
     case EXPENSES_ACTION_TYPES.UPDATE_EXPENSE_TYPE:
+    case EXPENSES_ACTION_TYPES.UPDATE_EXPENSES:
       let newExpenses = action.payload;
       return { ...state, expenses: newExpenses };
 
