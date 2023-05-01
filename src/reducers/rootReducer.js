@@ -3,7 +3,15 @@ import counterReducer from "./counterReducer";
 import todoReducer from "./todoReducer";
 import { combineReducers, createStore } from "redux";
 import authenticationReducer from "./authenticationReducer";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import expensesReducer from "./expensesReducer";
+
+const config = {
+  key: "root",
+  storage,
+  whitelist: ["authenticationReducer"],
+};
 
 //Combine all the sub reducers
 const rootReducer = combineReducers({
@@ -14,6 +22,9 @@ const rootReducer = combineReducers({
   expensesReducer: expensesReducer,
 });
 
-const store = createStore(rootReducer);
+const persistedReducer = persistReducer(config, rootReducer);
 
-export { store };
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
+
+export { store, persistor };

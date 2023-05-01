@@ -10,13 +10,14 @@ import Dashboard from "./components/Dashboard";
 import UserRegistration from "./components/UserRegistration/index.js";
 import IndividualExpenses from "./components/IndividualExpenses/index.js";
 import "./App.css";
-import { APPLICATION_PATHS } from "./Constants.js";
-import { AUTH_STATUS_KEY } from "./Constants.js";
+import { APPLICATION_PATHS, AUTH_STATUS_KEY } from "./Constants.js";
+import { useSelector } from "react-redux";
 
 function App() {
-  const loggedInUserId = sessionStorage.getItem(AUTH_STATUS_KEY);
+  const { loggedInUserId } = useSelector(
+    (state) => state.authenticationReducer
+  );
   const isLoggedIn = !!loggedInUserId;
-
   return (
     <Router>
       <div className="App">

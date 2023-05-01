@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { APPLICATION_PATHS } from "../../Constants";
-import { addNewUser } from "../Actions/authenticationAction";
 import MandatoryField from "../MandatoryField";
 import SimpleModal from "../SimpleModal";
 import "./UserRegistration.css";
+import { createNewUser } from "../../networkRequests";
 
 const UserRegistration = () => {
   const [firstName, setFirstName] = useState("");
@@ -14,32 +14,27 @@ const UserRegistration = () => {
   const [mailId, setMailId] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isUserRegistered, setIsUserRegistered] = useState(false);
+  const [isUserRegistrationModalVisible, setIsUserRegistrationModalVisible] =
+    useState(false);
 
-  let { users } = useSelector((state) => state.authenticationReducer);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const newUserRegistration = (e) => {
+  const newUserRegistration = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       alert("Passwords does not match");
       return;
     }
-    let isUserExists = users.some((user) => user.mailId === mailId);
-    if (isUserExists) {
-      alert("User already exists");
-      navigate(APPLICATION_PATHS.LOGIN);
-      return;
-    }
     let name = `${firstName} ${lastName}`;
-    dispatch(addNewUser(name, contactNumber, mailId, newPassword));
-    setIsUserRegistered(true);
+    await createNewUser({ name, contactNumber, mailId, password: newPassword });
+    setIsUserRegistrationModalVisible(true);
   };
   return (
     <div>
       <form className="col s12" onSubmit={newUserRegistration}>
-        <h4 className="center-align">User Registration</h4>
+        <h4 className="center-align user-registration-heading">
+          User Registration
+        </h4>
         <span className="back-to-login">
           <Link to={APPLICATION_PATHS.LOGIN}>Back to Login</Link>
         </span>
@@ -128,14 +123,14 @@ const UserRegistration = () => {
           />
         </div>
       </form>
-      {isUserRegistered && (
+      {isUserRegistrationModalVisible && (
         <SimpleModal
           timeoutDelay={3000}
           onTimeout={() => {
             navigate(APPLICATION_PATHS.LOGIN);
           }}
           body="User Registration Successful"
-          closeModal={() => setIsUserRegistered(false)}
+          closeModal={() => setIsUserRegistrationModalVisible(false)}
         />
       )}
     </div>

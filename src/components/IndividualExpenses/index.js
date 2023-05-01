@@ -41,10 +41,6 @@ const IndividualExpenses = () => {
     dispatch(setUserExpenses(newUserExpenses));
   }, []);
 
-  useEffect(() => {
-    console.log(userExpenses);
-  }, [userExpenses]);
-
   const getExpenseByType = () => {
     let newExpensesByType = [];
 

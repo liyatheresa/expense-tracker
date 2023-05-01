@@ -8,7 +8,7 @@ import {
   setIsPeopleCountFormVisible,
   setIsPeopleNameFormVisible,
 } from "../Actions/addNewExpenseAction";
-import { logoutAction } from "../Actions/authenticationAction";
+import { loginAction, logoutAction } from "../Actions/authenticationAction";
 import SimpleModal from "../SimpleModal";
 import "./Navbar.css";
 
@@ -17,25 +17,22 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isLogoutConfirmationVisible, setIsLogoutConfirmationVisible] =
     useState(false);
-  const { users, loggedInUserMailId } = useSelector(
+  const { loggedInUserName } = useSelector(
     (state) => state.authenticationReducer
   );
 
-  let userToLogin = users.find((user) => user.mailId === loggedInUserMailId);
-
   const handleLogout = () => {
-    localStorage.setItem(AUTH_STATUS_KEY, false);
+    dispatch(loginAction(""));
     dispatch(setIsExpenseTableVisible(false));
     dispatch(setIsPeopleCountFormVisible(false));
     dispatch(setIsPeopleNameFormVisible(false));
-    dispatch(logoutAction());
     navigate(APPLICATION_PATHS.LOGIN);
   };
   return (
     <nav className="nav-bar">
       <div className="user-profile">
         <i className="small material-icons profile-icon">account_circle</i>
-        <span>{userToLogin.name}</span>
+        <span>{loggedInUserName}</span>
       </div>
       <div className="nav-title">Expense Tracker</div>
       <button

@@ -40,5 +40,6 @@ export const EXPENSE_TYPE_COLOR = {
   ACCOMMODATION: "#BBA0CA",
   MEDICAL: "#AB09CA",
 };
-const PASSWORD = "FLWpIDCo1DFWUVz9";
-const USERNAME = "liyatheresa";
+
+export const mongoAtlasUri =
+  "mongodb+srv://liyatheresa:FLWpIDCo1DFWUVz9@cluster0.vfpukqp.mongodb.net/?retryWrites=true&w=majority";

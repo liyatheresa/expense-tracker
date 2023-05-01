@@ -12,6 +12,7 @@ import {
   updateExpense,
 } from "../Actions/addNewExpenseAction";
 import "./Expenses.css";
+import { addExpenses } from "../../networkRequests";
 
 const Expenses = () => {
   const [currentId, setCurrentId] = useState("");
@@ -20,6 +21,9 @@ const Expenses = () => {
   const [editableItem, setEditableItem] = useState(false);
 
   const { expenses, users } = useSelector((state) => state.expensesReducer);
+  const { loggedInUserId } = useSelector(
+    (state) => state.authenticationReducer
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -94,7 +98,11 @@ const Expenses = () => {
     dispatch(updateAmount(newExpenses));
   };
 
-  const navigateToIndividualExpense = () => {
+  const navigateToIndividualExpense = async () => {
+    await addExpenses({
+      userId: loggedInUserId,
+      expenses: expenses,
+    });
     dispatch(addTotalExpense(totalAmount));
     dispatch(setIsExpenseTableVisible(false));
     dispatch(navigateToIndividualExpensesPage());
