@@ -18,6 +18,12 @@ export const updateAmount = (newExpenses) => {
     payload: newExpenses,
   };
 };
+export const updateExpenses = (newExpenses) => {
+  return {
+    type: EXPENSES_ACTION_TYPES.UPDATE_EXPENSES,
+    payload: newExpenses,
+  };
+};
 export const navigateToIndividualExpensesPage = () => {
   return {
     type: EXPENSES_ACTION_TYPES.NAVIGATE_TO_INDIVIDUAL_EXPENSES_PAGE,

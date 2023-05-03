@@ -12,6 +12,7 @@ import Expenses from "../Expenses";
 import Navbar from "../Navbar";
 import NumberOfPeople from "../NumberOfPeople";
 import "./Dashboard.css";
+import { addMembers, readMembers } from "../../networkRequests";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -21,17 +22,28 @@ const Dashboard = () => {
     isPeopleNameFormVisible,
     users,
   } = useSelector((state) => state.expensesReducer);
-
+  const { loggedInUserId } = useSelector(
+    (state) => state.authenticationReducer
+  );
   const [localUsers, setLocalUsers] = useState(users);
   const [isUsernamesSubmitted, setIsUsernamesSubmitted] = useState(false);
 
-  useEffect(() => {
-    setIsUsernamesSubmitted(true);
-    if (users.length !== 0) {
+  const getExistingMemberDetails = async () => {
+    const { success, result } = await readMembers({ userId: loggedInUserId });
+    if (success && result !== "Not found") {
+      setLocalUsers(result);
+      dispatch(addUserNames(result));
       dispatch(setIsExpenseTableVisible(true));
       dispatch(setIsPeopleCountFormVisible(true));
       dispatch(setIsPeopleNameFormVisible(true));
+    } else {
+      setLocalUsers([]);
     }
+  };
+
+  useEffect(() => {
+    setIsUsernamesSubmitted(true);
+    getExistingMemberDetails();
   }, []);
 
   const createNUsers = (count) => {
@@ -52,8 +64,12 @@ const Dashboard = () => {
     });
   };
 
-  const addUserNamesAndUpdateExpenseTableVisibility = () => {
+  const addUserNamesAndUpdateExpenseTableVisibility = async () => {
     setIsUsernamesSubmitted(true);
+    await addMembers({
+      userId: loggedInUserId,
+      members: localUsers,
+    });
     dispatch(addUserNames(localUsers));
     dispatch(setIsExpenseTableVisible(true));
   };

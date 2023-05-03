@@ -1,4 +1,4 @@
-export const AUTHENTICATION_PATHS = {
+export const APPLICATION_PATHS = {
   HOME: "/",
   LOGIN: "/login",
   REGISTRATION: "/registration",
@@ -23,6 +23,7 @@ export const EXPENSES_ACTION_TYPES = {
   ADD_NEW_EXPENSE: "ADD_NEW_EXPENSE",
   UPDATE_EXPENSE_TYPE: "UPDATE_EXPENSE_TYPE",
   UPDATE_EXPENSE_AMOUNT: "UPDATE_EXPENSE_AMOUNT",
+  UPDATE_EXPENSES: "UPDATE_EXPENSES",
   NAVIGATE_TO_INDIVIDUAL_EXPENSES_PAGE: "NAVIGATE_TO_INDIVIDUAL_EXPENSES_PAGE",
   SET_USER_NAMES: "SET_USER_NAMES",
   CLEAR_EXPENSES: "CLEAR_EXPENSES",
@@ -40,5 +41,6 @@ export const EXPENSE_TYPE_COLOR = {
   ACCOMMODATION: "#BBA0CA",
   MEDICAL: "#AB09CA",
 };
-const PASSWORD = "FLWpIDCo1DFWUVz9";
-const USERNAME = "liyatheresa";
+
+export const mongoAtlasUri =
+  "mongodb+srv://liyatheresa:FLWpIDCo1DFWUVz9@cluster0.vfpukqp.mongodb.net/?retryWrites=true&w=majority";

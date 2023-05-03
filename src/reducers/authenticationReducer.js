@@ -7,10 +7,11 @@ const initState = {
       contactNumber: 9447355144,
       mailId: "liya.theresa@gmail.com",
       password: "abc",
+      id: crypto.randomUUID(),
     },
   ],
-  isAuthenticated: false,
-  loggedInUserMailId: "",
+  loggedInUserId: "",
+  loggedInUserName: "",
 };
 
 const loginReducer = (state = initState, action) => {
@@ -18,25 +19,9 @@ const loginReducer = (state = initState, action) => {
     case AUTHENTICATION_ACTION_TYPES.LOGIN:
       return {
         ...state,
-        isAuthenticated: action.payload.isAuthenticated,
-        loggedInUserMailId: action.payload.loggedInUserMailId,
+        loggedInUserId: action.payload.loggedInUserId,
+        loggedInUserName: action.payload.loggedInUserName,
       };
-    case AUTHENTICATION_ACTION_TYPES.LOGOUT:
-      return {
-        ...state,
-        isAuthenticated: false,
-        loggedInUserMailId: null,
-      };
-    case AUTHENTICATION_ACTION_TYPES.SETLOGGEDIN:
-      return { ...state, isAuthenticated: true };
-    case AUTHENTICATION_ACTION_TYPES.ADD_NEW_USER:
-      let userData = {
-        name: action.payload.name,
-        contactNumber: action.payload.contactNumber,
-        mailId: action.payload.mailId,
-        password: action.payload.password,
-      };
-      return { ...state, users: [...state.users, userData] };
     default:
       return state;
   }

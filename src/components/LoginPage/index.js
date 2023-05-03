@@ -1,56 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AUTHENTICATION_PATHS, AUTH_STATUS_KEY } from "../../Constants";
+import { APPLICATION_PATHS, AUTH_STATUS_KEY } from "../../Constants";
 import "./LoginPage.css";
-import { loginAction, setLoggedIn } from "../Actions/authenticationAction";
+import { userLogin } from "../../networkRequests";
+import { loginAction } from "../Actions/authenticationAction";
 
 const LoginPage = () => {
   const [userMailId, setUserMailId] = useState("");
   const [password, setPassword] = useState("");
 
-  const { users, isAuthenticated } = useSelector(
-    (state) => state.authenticationReducer
-  );
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const authStatusKey = localStorage.getItem(AUTH_STATUS_KEY);
-    if (authStatusKey === null) {
-      localStorage.setItem(AUTH_STATUS_KEY, false);
-      return;
-    }
-    if (authStatusKey === "true") {
-      navigate(AUTHENTICATION_PATHS.DASHBOARD);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem(AUTH_STATUS_KEY) === "true") {
-      dispatch(setLoggedIn());
-      return;
-    }
-  }, [isAuthenticated]);
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    let userToLogin = users.find((user) => user.mailId === userMailId);
-    if (!userToLogin) {
-      alert("User not found");
+    const { success, result } = await userLogin({
+      mailId: userMailId,
+      password: password,
+    });
+    if (!success || result === "Invalid") {
+      dispatch(loginAction(""));
+      alert("Invalid email or password");
       return;
     }
-    if (userToLogin.password !== password) {
-      alert("Incorrect credentials");
-      return;
-    }
-    localStorage.setItem(AUTH_STATUS_KEY, true);
-    dispatch(loginAction(userToLogin.mailId));
-    navigate(AUTHENTICATION_PATHS.DASHBOARD);
+    dispatch(loginAction(result.id, result.name));
+    navigate(APPLICATION_PATHS.DASHBOARD);
   };
 
   const registerNewUser = () => {
-    navigate(AUTHENTICATION_PATHS.REGISTRATION);
+    navigate(APPLICATION_PATHS.REGISTRATION);
   };
 
   return (

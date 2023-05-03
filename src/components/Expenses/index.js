@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AUTHENTICATION_PATHS, EXPENSE_TYPES } from "../../Constants";
+import { APPLICATION_PATHS, EXPENSE_TYPES } from "../../Constants";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,8 +10,10 @@ import {
   setIsExpenseTableVisible,
   updateAmount,
   updateExpense,
+  updateExpenses,
 } from "../Actions/addNewExpenseAction";
 import "./Expenses.css";
+import { addExpenses, readExpenses } from "../../networkRequests";
 
 const Expenses = () => {
   const [currentId, setCurrentId] = useState("");
@@ -20,9 +22,25 @@ const Expenses = () => {
   const [editableItem, setEditableItem] = useState(false);
 
   const { expenses, users } = useSelector((state) => state.expensesReducer);
+  const { loggedInUserId } = useSelector(
+    (state) => state.authenticationReducer
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getExistingExpensesDetails = async () => {
+    const { success, result } = await readExpenses({ userId: loggedInUserId });
+    if (success && result !== "Not found") {
+      dispatch(updateExpenses(result));
+    } else {
+      dispatch(updateExpenses([]));
+    }
+  };
+
+  useEffect(() => {
+    getExistingExpensesDetails();
+  }, []);
 
   useEffect(() => {
     let sumAmount = 0;
@@ -94,11 +112,15 @@ const Expenses = () => {
     dispatch(updateAmount(newExpenses));
   };
 
-  const navigateToIndividualExpense = () => {
+  const navigateToIndividualExpense = async () => {
+    await addExpenses({
+      userId: loggedInUserId,
+      expenses: expenses,
+    });
     dispatch(addTotalExpense(totalAmount));
     dispatch(setIsExpenseTableVisible(false));
     dispatch(navigateToIndividualExpensesPage());
-    navigate(AUTHENTICATION_PATHS.INDIVIDUAL_EXPENSES);
+    navigate(APPLICATION_PATHS.INDIVIDUAL_EXPENSES);
   };
 
   const options = Object.keys(EXPENSE_TYPES).map((expenseType) => ({
