@@ -97,4 +97,13 @@ app.post("/expenses/read", async (req, resp) => {
   }
 });
 
+app.post("/clear-group", async (req, resp) => {
+  const groupExpenses = getGroupExpensesModel();
+  const { body } = req;
+  const userDocument = await groupExpenses.findOneAndUpdate(
+    { userId: body.userId },
+    { expenses: [], members: [] }
+  );
+  resp.send(userDocument);
+});
 app.listen(PORT);

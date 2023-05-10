@@ -12,7 +12,11 @@ import Expenses from "../Expenses";
 import Navbar from "../Navbar";
 import NumberOfPeople from "../NumberOfPeople";
 import "./Dashboard.css";
-import { addMembers, readMembers } from "../../networkRequests";
+import {
+  addMembers,
+  clearExistingGroup,
+  readMembers,
+} from "../../networkRequests";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -80,9 +84,13 @@ const Dashboard = () => {
     setIsUsernamesSubmitted(false);
   };
 
-  const showPeopleCountForm = () => {
+  const showPeopleCountForm = async () => {
     dispatch(setIsExpenseTableVisible(false));
     dispatch(setIsPeopleNameFormVisible(false));
+    const { success, result } = await clearExistingGroup({
+      userId: loggedInUserId,
+    });
+    console.log(result);
     dispatch(clearUsers());
     setLocalUsers([]);
     dispatch(clearExpenses());

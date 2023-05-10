@@ -1,6 +1,7 @@
 import {
   ADD_EXPENSES,
   ADD_MEMBERS,
+  CLEAR_GROUP,
   CREATE_NEW_USER,
   READ_EXPENSES,
   READ_MEMBERS,
@@ -50,6 +51,14 @@ export const readMembers = async (userId) => {
 
 export const readExpenses = async (userId) => {
   const result = await callApi("POST", READ_EXPENSES, userId);
+  if (result.status === 200) {
+    return { success: true, result: result.data };
+  }
+  return { success: false };
+};
+
+export const clearExistingGroup = async (userId) => {
+  const result = await callApi("POST", CLEAR_GROUP, userId);
   if (result.status === 200) {
     return { success: true, result: result.data };
   }

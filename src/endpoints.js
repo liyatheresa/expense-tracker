@@ -11,3 +11,5 @@ export const ADD_EXPENSES = `${DOMAIN}/expenses/add/`;
 export const READ_MEMBERS = `${DOMAIN}/members/read/`;
 
 export const READ_EXPENSES = `${DOMAIN}/expenses/read/`;
+
+export const CLEAR_GROUP = `${DOMAIN}/clear-group/`;
